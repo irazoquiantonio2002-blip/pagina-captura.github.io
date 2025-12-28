@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masterclass: Automatización de Clínica</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            scroll-behavior: smooth;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-glow {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .step-transition {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hidden-step {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .active-step {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .before-after-card {
+            transition: transform 0.3s ease;
+        }
+        .before-after-card:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes pulse-soft {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        .animate-pulse-soft {
+            animation: pulse-soft 3s infinite;
+        }
+    </style>
+</head>
+<body class="bg-[#0F172A] text-slate-200 overflow-x-hidden">
+
+    <!-- Sección Landing (Hero) -->
+    <section id="hero-section" class="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden">
+        <div class="hero-glow -top-20 -left-20"></div>
+        <div class="hero-glow bottom-0 -right-20"></div>
+
+        <div class="max-w-4xl w-full text-center space-y-8 relative z-10">
+            <!-- Badge: Método Insider -->
+            <div class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm font-bold mb-4 animate-bounce">
+                <i data-lucide="lock" class="w-4 h-4"></i>
+                MÉTODO INSIDER: Domina +500 Mensajes Diarios Sin Recepcionistas
+            </div>
+
+            <!-- Titular Irresistible -->
+            <h1 class="text-4xl md:text-7xl font-extrabold text-white tracking-tight leading-[1.1]">
+                Cómo manejar <span class="gradient-text">+500 mensajes</span> diarios sin contratar más personal.
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                El sistema probado para aumentar tu agenda hasta un <span class="text-white font-bold text-3xl">40%</span> automatizando tu atención médica.
+            </p>
+
+            <!-- CTA Principal -->
+            <div class="pt-6">
+                <button onclick="startFunnel()" class="group relative inline-flex items-center gap-3 px-10 py-6 bg-indigo-600 text-white rounded-2xl font-bold text-xl hover:bg-indigo-500 transition-all hover:scale-105 shadow-[0_20px_50px_rgba(99,102,241,0.3)] active:scale-95">
+                    ¡Quiero el acceso instantáneo!
+                    <i data-lucide="arrow-right" class="w-6 h-6 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+                <p class="mt-4 text-slate-500 text-sm flex items-center justify-center gap-2">
+                    <i data-lucide="clock" class="w-4 h-4"></i> Toma menos de 30 segundos
+                </p>
+            </div>
+
+            <!-- Comparativa Visual (Antes y Después) -->
+            <div class="grid md:grid-cols-2 gap-8 mt-20">
+                <!-- Antes -->
+                <div class="before-after-card bg-slate-900/50 border border-red-500/20 rounded-[2.5rem] p-8 text-left">
+                    <div class="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="frown" class="text-red-500 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Situación Actual</h3>
+                    <ul class="space-y-3 text-slate-400">
+                        <li class="flex gap-2 items-start"><i data-lucide="x-circle" class="w-5 h-5 text-red-500 shrink-0"></i> Chat colapsado y desordenado.</li>
+                        <li class="flex gap-2 items-start"><i data-lucide="x-circle" class="w-5 h-5 text-red-500 shrink-0"></i> Pacientes que tardan horas en recibir respuesta.</li>
+                        <li class="flex gap-2 items-start"><i data-lucide="x-circle" class="w-5 h-5 text-red-500 shrink-0"></i> Agenda con huecos por falta de seguimiento.</li>
+                    </ul>
+                </div>
+                <!-- Después -->
+                <div class="before-after-card bg-indigo-600/10 border border-indigo-500/30 rounded-[2.5rem] p-8 text-left relative overflow-hidden">
+                    <div class="absolute top-4 right-6 text-indigo-500/20"><i data-lucide="trending-up" class="w-24 h-24"></i></div>
+                    <div class="w-12 h-12 bg-indigo-500/20 rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="smile" class="text-indigo-400 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Con este Sistema</h3>
+                    <ul class="space-y-3 text-slate-300">
+                        <li class="flex gap-2 items-start"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-400 shrink-0"></i> Atención inmediata 24/7 sin humanos.</li>
+                        <li class="flex gap-2 items-start"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-400 shrink-0"></i> Triaje automático de pacientes calificados.</li>
+                        <li class="flex gap-2 items-start"><i data-lucide="check-circle" class="w-5 h-5 text-indigo-400 shrink-0"></i> Agenda llena con un 40% más de citas reales.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Funnel de Captura (Oculta inicialmente) -->
+    <section id="funnel-section" class="fixed inset-0 z-50 bg-[#0F172A] hidden flex-col items-center justify-center p-4">
+        <div class="max-w-2xl w-full">
+            
+            <!-- Header del Funnel -->
+            <div class="flex justify-between items-center mb-10 px-2">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
+                        <i data-lucide="zap" class="text-white w-6 h-6"></i>
+                    </div>
+                    <span class="font-bold text-white text-lg tracking-tight">Acceso VIP</span>
+                </div>
+                <button onclick="closeFunnel()" class="text-slate-500 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Barra de Progreso -->
+            <div id="progress-container" class="px-2 mb-8 flex items-center gap-4">
+                <div class="flex-grow h-[4px] bg-slate-800 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-indigo-500 transition-all duration-700 ease-out" style="width: 20%;"></div>
+                </div>
+                <span id="step-indicator" class="text-[11px] font-bold text-indigo-400 uppercase tracking-[0.2em] whitespace-nowrap">
+                    PASO 1 / 5
+                </span>
+            </div>
+
+            <!-- Tarjeta del Formulario -->
+            <div id="main-card" class="bg-slate-900/80 backdrop-blur-2xl border border-slate-800 rounded-[2.5rem] shadow-2xl min-h-[500px] flex flex-col overflow-hidden">
+                
+                <!-- Área de Contenido -->
+                <div id="content-area" class="p-8 md:p-12 flex-grow step-transition active-step">
+                    <!-- Contenido inyectado por JS -->
+                </div>
+
+                <!-- Navegación -->
+                <div id="footer-nav" class="p-8 bg-slate-900/50 border-t border-slate-800 flex items-center justify-between">
+                    <button id="btn-back" class="hidden flex items-center gap-2 text-slate-400 hover:text-white transition-colors font-semibold px-4 py-2">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                        Atrás
+                    </button>
+                    <div id="back-spacer" class="w-10"></div>
+
+                    <button id="btn-next" disabled class="group flex items-center gap-3 px-10 py-4 rounded-2xl font-bold transition-all bg-slate-800 text-slate-600 cursor-not-allowed">
+                        <span id="next-text">Siguiente</span>
+                        <i data-lucide="chevron-right" class="w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer General -->
+    <footer class="py-10 text-center text-slate-600 text-sm">
+        &copy; 2025 Oly sistem. Reservados todos los derechos.
+    </footer>
+
+    <script>
+        // Variables de Estado
+        let currentStep = 1;
+        const totalSteps = 5;
+        let detectedPrefix = ""; // Almacenará el código de país detectado
+
+        const formData = {
+            nombre: '',
+            email: '',
+            telefono: '',
+            mensajesDiarios: '',
+            inversionMensual: ''
+        };
+
+        const optionsMensajes = ["1 a 100 /Dia", "100 a 200 /Día", "200 a 500 / Día", "+500 /Día"];
+        const optionsInversion = ["Nada /Mes", "0 a 500 USD /Mes", "500 a 1000 USD /Mes", "1000 A 2000 USD /Mes", "+2000 USD /Mes"];
+
+        // Selectores
+        const heroSection = document.getElementById('hero-section');
+        const funnelSection = document.getElementById('funnel-section');
+        const contentArea = document.getElementById('content-area');
+        const progressBar = document.getElementById('progress-bar');
+        const stepIndicator = document.getElementById('step-indicator');
+        const btnBack = document.getElementById('btn-back');
+        const btnNext = document.getElementById('btn-next');
+        const nextText = document.getElementById('next-text');
+        const backSpacer = document.getElementById('back-spacer');
+
+        // Detección de País por IP
+        async function detectCountryCode() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                if (data.country_calling_code) {
+                    detectedPrefix = data.country_calling_code;
+                }
+            } catch (error) {
+                console.log("No se pudo detectar el país, se usará campo vacío.");
+            }
+        }
+
+        // Navegación del Funnel
+        function startFunnel() {
+            heroSection.classList.add('animate-pulse-soft');
+            funnelSection.classList.remove('hidden');
+            funnelSection.classList.add('flex');
+            renderStep();
+            updateNav();
+        }
+
+        function closeFunnel() {
+            funnelSection.classList.add('hidden');
+            funnelSection.classList.remove('flex');
+        }
+
+        function init() {
+            detectCountryCode(); // Iniciar detección al cargar
+            lucide.createIcons();
+            btnNext.addEventListener('click', handleNext);
+            btnBack.addEventListener('click', handleBack);
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function isStepValid() {
+            switch(currentStep) {
+                case 1: return formData.nombre.trim().length > 2;
+                case 2: return validateEmail(formData.email);
+                case 3: return formData.telefono.trim().length > 7;
+                case 4: return formData.mensajesDiarios !== '';
+                case 5: return formData.inversionMensual !== '';
+                default: return false;
+            }
+        }
+
+        function updateNav() {
+            if (currentStep > 1) {
+                btnBack.classList.remove('hidden');
+                backSpacer.classList.add('hidden');
+            } else {
+                btnBack.classList.add('hidden');
+                backSpacer.classList.remove('hidden');
+            }
+
+            nextText.innerText = currentStep === totalSteps ? '¡Obtener Guía Ahora!' : 'Siguiente';
+
+            if (isStepValid()) {
+                btnNext.disabled = false;
+                btnNext.classList.remove('bg-slate-800', 'text-slate-600', 'cursor-not-allowed');
+                btnNext.classList.add('bg-indigo-600', 'text-white', 'shadow-[0_10px_30px_rgba(99,102,241,0.4)]', 'hover:-translate-y-1', 'active:scale-95');
+            } else {
+                btnNext.disabled = true;
+                btnNext.classList.add('bg-slate-800', 'text-slate-600', 'cursor-not-allowed');
+                btnNext.classList.remove('bg-indigo-600', 'text-white', 'shadow-[0_10px_30px_rgba(99,102,241,0.4)]', 'hover:-translate-y-1', 'active:scale-95');
+            }
+
+            progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+            stepIndicator.innerText = `PASO ${currentStep} / ${totalSteps}`;
+        }
+
+        function handleNext() {
+            if (!isStepValid()) return;
+            if (currentStep < totalSteps) {
+                transition(() => {
+                    currentStep++;
+                    renderStep();
+                });
+            } else {
+                showSuccess();
+            }
+        }
+
+        function handleBack() {
+            if (currentStep > 1) {
+                transition(() => {
+                    currentStep--;
+                    renderStep();
+                });
+            }
+        }
+
+        function transition(callback) {
+            contentArea.style.opacity = '0';
+            contentArea.style.transform = 'translateX(-20px)';
+            setTimeout(() => {
+                callback();
+                updateNav();
+                contentArea.style.opacity = '1';
+                contentArea.style.transform = 'translateX(0)';
+                lucide.createIcons();
+            }, 300);
+        }
+
+        function renderStep() {
+            let html = '';
+            const titles = [
+                ["Bienvenido", "¿Cuál es tu nombre completo?"],
+                ["Excelente", "¿A qué correo te enviamos el documento?"],
+                ["Último paso de contacto", "Tu número de WhatsApp"],
+                ["Casi listo", "¿Cuántos mensajes recibe tu clínica al día?"],
+                ["Finalizando", "¿Cuánto inviertes en la atención a esos mensajes al mes?"]
+            ];
+
+            const [subtitle, title] = titles[currentStep - 1];
+            
+            html = `<div class="space-y-8">
+                <div class="space-y-2">
+                    <span class="text-indigo-400 font-bold uppercase text-[11px] tracking-widest">${subtitle}</span>
+                    <h2 class="text-3xl font-bold text-white leading-tight">${title}</h2>
+                </div>`;
+
+            if (currentStep <= 3) {
+                const types = ["text", "email", "tel"];
+                const names = ["nombre", "email", "telefono"];
+                const placeholders = ["Nombre y Apellido", "ejemplo@clinica.com", "+52 1..."];
+                
+                // Lógica para pre-rellenar el código de país en el paso 3
+                if (currentStep === 3 && !formData.telefono && detectedPrefix) {
+                    formData.telefono = detectedPrefix + " ";
+                }
+
+                const val = formData[names[currentStep-1]];
+
+                html += `<input type="${types[currentStep-1]}" id="input-field" placeholder="${placeholders[currentStep-1]}" value="${val}" 
+                    class="w-full bg-slate-800/50 border-2 border-slate-700 rounded-2xl px-6 py-5 text-xl text-white focus:border-indigo-500 focus:outline-none transition-all placeholder:text-slate-600">`;
+            } else {
+                const opts = currentStep === 4 ? optionsMensajes : optionsInversion;
+                const field = currentStep === 4 ? 'mensajesDiarios' : 'inversionMensual';
+                
+                html += `<div class="grid gap-3">
+                    ${opts.map(opt => `
+                        <button onclick="selectOption('${field}', '${opt}')" class="p-6 rounded-2xl border-2 text-left transition-all flex items-center justify-between group ${formData[field] === opt ? 'border-indigo-500 bg-indigo-500/10' : 'border-slate-800 bg-slate-800/30 hover:border-slate-700'}">
+                            <span class="text-lg font-medium ${formData[field] === opt ? 'text-white' : 'text-slate-400'}">${opt}</span>
+                            <div class="w-6 h-6 rounded-full border-2 flex items-center justify-center ${formData[field] === opt ? 'border-indigo-500 bg-indigo-500' : 'border-slate-700'}">
+                                ${formData[field] === opt ? '<div class="w-2 h-2 bg-white rounded-full"></div>' : ''}
+                            </div>
+                        </button>
+                    `).join('')}
+                </div>`;
+            }
+            html += `</div>`;
+            contentArea.innerHTML = html;
+
+            const input = document.getElementById('input-field');
+            if (input) {
+                input.focus();
+                
+                // Colocar cursor al final si hay texto pre-rellenado y el tipo lo soporta
+                const length = input.value.length;
+                const supportedTypes = ['text', 'search', 'tel', 'url', 'password'];
+                if (supportedTypes.includes(input.type)) {
+                    input.setSelectionRange(length, length);
+                }
+                
+                input.addEventListener('input', (e) => {
+                    formData[["nombre", "email", "telefono"][currentStep-1]] = e.target.value;
+                    updateNav();
+                });
+            }
+        }
+
+        window.selectOption = function(field, value) {
+            formData[field] = value;
+            renderStep();
+            updateNav();
+            setTimeout(() => handleNext(), 500);
+        }
+
+        function showSuccess() {
+            funnelSection.innerHTML = `
+            <div class="max-w-xl w-full text-center space-y-10 animate-in fade-in duration-700 p-6">
+                <div class="relative inline-block">
+                    <div class="absolute inset-0 bg-indigo-500 blur-3xl opacity-30 rounded-full animate-pulse"></div>
+                    <div class="relative w-28 h-28 bg-indigo-600 rounded-[2.5rem] shadow-2xl flex items-center justify-center mx-auto border border-indigo-400/30">
+                        <i data-lucide="check-circle" class="w-14 h-14 text-white"></i>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h2 class="text-4xl md:text-5xl font-black text-white leading-tight">¡Misión cumplida!</h2>
+                    <p class="text-xl text-slate-400 leading-relaxed">
+                        El documento personalizado está en camino. Hemos enviado el acceso directo a <strong>${formData.email}</strong> y un aviso a tu <strong>WhatsApp</strong>.
+                    </p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 rounded-[2.5rem] p-10 text-left space-y-8">
+                    <div class="flex items-center gap-3 text-indigo-400 font-bold uppercase text-xs tracking-[0.2em]">
+                        <i data-lucide="send" class="w-4 h-4"></i> Acciones Inmediatas
+                    </div>
+                    <ul class="space-y-6">
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold shrink-0">1</div>
+                            <p class="text-slate-300">Revisa tu correo ahora. Si no aparece, busca en <strong>Promociones o Spam</strong>.</p>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center font-bold shrink-0">2</div>
+                            <p class="text-slate-300">Te enviaremos un WhatsApp con una sorpresa adicional por tomar acción hoy.</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex flex-col gap-4 items-center">
+                    <button onclick="window.location.reload()" class="group px-12 py-5 bg-white text-slate-900 rounded-2xl font-black text-lg hover:scale-105 transition-all shadow-2xl">
+                        Listo
+                    </button>
+                </div>
+            </div>`;
+            lucide.createIcons();
+        }
+
+        init();
+    </script>
+</body>
+</html>

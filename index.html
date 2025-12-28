@@ -1,90 +1,486 @@
---mercury-platinum: #F1F5F9;
---mercury-glass: rgba(255, 255, 255, 0.75);
---chrome-gradient: linear-gradient(180deg, #1e293b 0%, #64748b 50%, #94a3b8 100%);
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatización de Clínica | Oly System</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        
+        :root {
+            --mercury-light: #FBFBFC;
+            --mercury-silver: #E2E8F0;
+            --mercury-platinum: #F1F5F9;
+            --mercury-glass: rgba(255, 255, 255, 0.75);
+            --chrome-gradient: linear-gradient(180deg, #1e293b 0%, #64748b 50%, #94a3b8 100%);
             --brand-gradient: linear-gradient(135deg, #00D1FF 0%, #0055FF 100%);
-}
+        }
 
-body {
-@@ -182,7 +183,7 @@
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--mercury-light);
+            color: #0F172A;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
 
-<!-- Titular Mercurio con Impacto -->
-<h1 class="text-6xl md:text-[90px] font-extrabold tracking-tighter leading-[0.9] mercury-text animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
-                Cómo manejar <br class="hidden md:block"> <span class="italic font-bold">+500 mensajes</span> diarios en tu clinica.
-                Cómo manejar <br class="hidden md:block"> <span class="italic font-bold">+500 mensajes</span> diarios.
-</h1>
+        /* Fondo de estudio plateado avanzado */
+        .studio-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 0%, #FFFFFF 0%, #F8FAFC 100%);
+        }
 
-<p class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium animate-in fade-in duration-1000 delay-500">
-@@ -275,7 +276,7 @@
-</footer>
+        .silver-flare {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.4;
+            background: radial-gradient(circle, #CBD5E1 0%, rgba(203, 213, 225, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
 
-<script>
-        // Variables de Estado idénticas
+        .flare-1 { width: 600px; height: 600px; top: -200px; left: -100px; animation: move 20s infinite alternate; }
+        .flare-2 { width: 700px; height: 700px; bottom: -200px; right: -150px; animation: move 25s infinite alternate-reverse; }
+        .flare-3 { width: 400px; height: 400px; top: 30%; right: 5%; animation: move 18s infinite alternate; opacity: 0.3; }
+        .flare-4 { width: 350px; height: 350px; bottom: 20%; left: 10%; background: radial-gradient(circle, #E2E8F0 0%, transparent 70%); animation: move 15s infinite alternate-reverse; }
+
+        @keyframes move {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(80px, 120px) scale(1.1); }
+        }
+
+        /* Texto efecto Cromo Líquido */
+        .mercury-text {
+            background: var(--chrome-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
+        }
+
+        /* Glassmorphism Premium */
+        .mercury-glass-panel {
+            background: var(--mercury-glass);
+            backdrop-filter: blur(50px) saturate(200%);
+            -webkit-backdrop-filter: blur(50px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.01), 
+                0 20px 40px -5px rgba(0, 0, 0, 0.03),
+                inset 0 0 20px rgba(255, 255, 255, 0.5);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mercury-glass-panel:hover {
+            box-shadow: 
+                0 30px 60px -12px rgba(0, 0, 0, 0.08),
+                inset 0 0 30px rgba(255, 255, 255, 0.8);
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 1);
+        }
+
+        /* Botón estilo Metal Líquido Pulido */
+        .btn-mercury {
+            background: linear-gradient(180deg, #1e293b 0%, #020617 100%);
+            color: white;
+            box-shadow: 
+                0 10px 25px -5px rgba(15, 23, 42, 0.25),
+                0 8px 10px -6px rgba(15, 23, 42, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-mercury::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: 0.8s;
+        }
+
+        .btn-mercury:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.4);
+            filter: brightness(1.2);
+        }
+
+        .btn-mercury:hover::after {
+            left: 100%;
+        }
+
+        .btn-mercury:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        /* Estilo para los inputs */
+        .glass-input {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+        }
+
+        .glass-input:focus {
+            background: white;
+            border-color: #cbd5e1;
+            box-shadow: 0 0 0 5px rgba(203, 213, 225, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Estilo de opciones plateadas */
+        .option-mercury {
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .option-mercury:hover {
+            background: white;
+            border-color: rgba(203, 213, 225, 1);
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.03);
+        }
+
+        .active-option {
+            background: white !important;
+            border-color: #0f172a !important;
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1) !important;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Capa de fondo avanzada -->
+    <div class="studio-background"></div>
+    <div class="silver-flare flare-1"></div>
+    <div class="silver-flare flare-2"></div>
+    <div class="silver-flare flare-3"></div>
+    <div class="silver-flare flare-4"></div>
+
+    <!-- Sección Hero -->
+    <section id="hero-section" class="relative min-h-screen flex flex-col items-center justify-center px-6 py-20 z-10">
+        <div class="max-w-4xl w-full text-center space-y-12">
+            
+            <!-- Badge Superior Estilo Apple -->
+            <div class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full mercury-glass-panel border-white/80 text-slate-500 text-xs font-bold tracking-[0.2em] uppercase shadow-lg shadow-black/5 animate-in fade-in slide-in-from-top-4 duration-1000">
+                <i data-lucide="award" class="w-4 h-4 text-slate-400"></i>
+                MÉTODO INSIDER: Domina +500 Mensajes Diarios Sin Recepcionistas
+            </div>
+
+            <!-- Titular Mercurio con Impacto -->
+            <h1 class="text-6xl md:text-[90px] font-extrabold tracking-tighter leading-[0.9] mercury-text animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+                Cómo manejar <br class="hidden md:block"> <span class="italic font-bold">+500 mensajes</span> diarios en tú clinica.
+            </h1>
+            
+            <p class="text-xl md:text-2xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-medium animate-in fade-in duration-1000 delay-500">
+                Sin recepcionistas. Sin estrés. Escala tu agenda un <span class="text-slate-900 font-bold underline decoration-slate-200 underline-offset-8">40%</span> con la arquitectura avanzada de <span class="font-bold text-slate-800">Oly System</span>.
+            </p>
+
+            <!-- Botón Principal Premium -->
+            <div class="pt-8 flex flex-col items-center gap-6 animate-in fade-in duration-1000 delay-700">
+                <button onclick="startFunnel()" class="group relative inline-flex items-center gap-4 px-16 py-7 btn-mercury rounded-[2rem] font-bold text-2xl active:scale-95 transition-all">
+                    Obtener acceso instantáneo
+                    <i data-lucide="chevron-right" class="w-7 h-7 group-hover:translate-x-1.5 transition-transform"></i>
+                </button>
+                <div class="flex items-center gap-10 text-[11px] font-bold text-slate-400 uppercase tracking-[0.25em]">
+                    <span class="flex items-center gap-2 hover:text-slate-600 transition-colors cursor-default"><i data-lucide="lock" class="w-3.5 h-3.5"></i> Protocolo Seguro</span>
+                    <span class="flex items-center gap-2 hover:text-slate-600 transition-colors cursor-default"><i data-lucide="clock" class="w-3.5 h-3.5"></i> < 30 Segundos</span>
+                </div>
+            </div>
+
+            <!-- Comparativa Visual Ultra Elegante -->
+            <div class="grid md:grid-cols-2 gap-10 mt-28">
+                <div class="p-12 rounded-[3rem] mercury-glass-panel text-left">
+                    <div class="w-16 h-16 bg-white/60 rounded-3xl flex items-center justify-center mb-8 border border-white/50 shadow-sm transition-transform duration-500 group-hover:scale-110">
+                        <i data-lucide="alert-circle" class="text-slate-400 w-9 h-9"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-800 mb-3 tracking-tight">Situación Actual</h3>
+                    <p class="text-slate-500 leading-relaxed font-medium text-lg">Colapso manual, respuestas tardías y pacientes calificados que se pierden en el desorden operativo.</p>
+                </div>
+                <div class="p-12 rounded-[3rem] bg-white border border-slate-100 text-left shadow-[0_30px_60px_-15px_rgba(0,0,0,0.05)] transition-all duration-500 hover:shadow-[0_40px_80px_-15px_rgba(0,0,0,0.08)] hover:-translate-y-1">
+                    <div class="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center mb-8 border border-slate-100">
+                        <i data-lucide="zap" class="text-slate-900 w-9 h-9"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-3 tracking-tight">Con Oly System</h3>
+                    <p class="text-slate-500 leading-relaxed font-medium text-lg">Automatización líquida 24/7. Respuestas inmediatas y agenda llena mediante IA aplicada.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overlay Funnel Crystal Mercury -->
+    <section id="funnel-section" class="fixed inset-0 z-50 bg-white/40 backdrop-blur-2xl hidden flex-col items-center justify-center p-4">
+        <div class="max-w-2xl w-full">
+            
+            <!-- Nav Header -->
+            <div class="flex justify-between items-center mb-10 px-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg shadow-black/20">
+                        <i data-lucide="layers" class="text-white w-5 h-5"></i>
+                    </div>
+                    <span class="font-extrabold text-slate-900 text-sm tracking-tight uppercase tracking-widest">Oly System VIP</span>
+                </div>
+                <button onclick="closeFunnel()" class="w-11 h-11 rounded-full bg-white border border-slate-100 flex items-center justify-center text-slate-400 hover:text-black hover:scale-110 transition-all shadow-sm">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- Barra de Progreso Minimalista -->
+            <div id="progress-container" class="px-6 mb-12">
+                <div class="flex items-center justify-between mb-4 font-bold text-[10px] tracking-[0.3em] text-slate-400 uppercase">
+                    <span id="step-indicator">Configuración Inicial</span>
+                    <span class="text-slate-900">Paso Activo</span>
+                </div>
+                <div class="h-2 bg-slate-100 rounded-full overflow-hidden shadow-inner">
+                    <div id="progress-bar" class="h-full bg-slate-900 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-[0_0_10px_rgba(0,0,0,0.2)]" style="width: 20%;"></div>
+                </div>
+            </div>
+
+            <!-- Card Principal Glass Mercury -->
+            <div id="main-card" class="mercury-glass-panel rounded-[4rem] min-h-[550px] flex flex-col overflow-hidden bg-white/60 shadow-[0_50px_120px_-20px_rgba(0,0,0,0.1)]">
+                <div id="content-area" class="p-12 md:p-16 flex-grow transition-all duration-700 opacity-100 translate-y-0">
+                    <!-- Contenido JS -->
+                </div>
+
+                <div id="footer-nav" class="p-10 px-12 bg-white/40 border-t border-white/60 flex items-center justify-between">
+                    <button id="btn-back" class="hidden flex items-center gap-2 text-slate-400 hover:text-slate-900 transition-colors font-bold text-xs uppercase tracking-[0.2em]">
+                        <i data-lucide="arrow-left" class="w-5 h-5"></i> Atrás
+                    </button>
+                    <div id="back-spacer" class="w-10"></div>
+
+                    <button id="btn-next" disabled class="group flex items-center gap-3 px-12 py-5 rounded-2xl font-bold transition-all bg-slate-100 text-slate-300 cursor-not-allowed text-xs uppercase tracking-[0.25em]">
+                        <span id="next-text">Siguiente</span>
+                        <i data-lucide="chevron-right" class="w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-16 text-center text-slate-400 text-[11px] font-bold uppercase tracking-[0.4em] opacity-60">
+        &copy; 2025 Oly System. Conectividad Superior.
+    </footer>
+
+    <script>
         // Variables de Estado
-let currentStep = 1;
-const totalSteps = 5;
-let detectedPrefix = "";
-@@ -293,7 +294,7 @@
-const nextText = document.getElementById('next-text');
-const backSpacer = document.getElementById('back-spacer');
+        let currentStep = 1;
+        const totalSteps = 5;
+        let detectedPrefix = "";
 
-        // Detección de País idéntica
+        const formData = { nombre: '', email: '', telefono: '', mensajesDiarios: '', inversionMensual: '' };
+        const optionsMensajes = ["1 a 100 /Dia", "100 a 200 /Día", "200 a 500 / Día", "+500 /Día"];
+        const optionsInversion = ["Nada /Mes", "0 a 500 USD /Mes", "500 a 1000 USD /Mes", "1000 A 2000 USD /Mes", "+2000 USD /Mes"];
+
+        const funnelSection = document.getElementById('funnel-section');
+        const contentArea = document.getElementById('content-area');
+        const progressBar = document.getElementById('progress-bar');
+        const stepIndicator = document.getElementById('step-indicator');
+        const btnBack = document.getElementById('btn-back');
+        const btnNext = document.getElementById('btn-next');
+        const nextText = document.getElementById('next-text');
+        const backSpacer = document.getElementById('back-spacer');
+
         // Detección de País
-async function detectCountryCode() {
-try {
-const response = await fetch('https://ipapi.co/json/');
-@@ -400,7 +401,6 @@
-html += `<input type="text" id="input-field" placeholder="${placeholders[currentStep-1]}" value="${val}" 
-                   class="w-full glass-input rounded-[1.5rem] px-8 py-6 text-2xl text-slate-900 focus:outline-none placeholder:text-slate-300 font-semibold shadow-inner">`;
+        async function detectCountryCode() {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                if (data.country_calling_code) detectedPrefix = data.country_calling_code;
+            } catch (e) {}
+        }
 
-                // Agregar la descripción específica solicitada para el paso de WhatsApp (Step 3)
-if (currentStep === 3) {
-html += `<p class="mt-4 text-slate-500 font-medium leading-relaxed px-2 animate-in fade-in duration-500">
-                       a este numero tambien enviaremos tu regalo, por lo que corrobora que este bien escrito y con tu codigo de país es correcto
-@@ -441,47 +441,46 @@
-formData[field] = value;
-renderStep();
-updateNav();
-            setTimeout(() => handleNext(), 500);
-}
+        function startFunnel() {
+            funnelSection.classList.remove('hidden');
+            funnelSection.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            renderStep();
+            updateNav();
+        }
 
-function showSuccess() {
-funnelSection.innerHTML = `
-           <div class="max-w-xl w-full text-center space-y-12 p-8 animate-in fade-in duration-1000">
-               <div class="relative inline-block">
-                   <div class="absolute inset-0 bg-slate-300 blur-[100px] opacity-40 rounded-full animate-pulse"></div>
-                   <div class="relative w-32 h-32 bg-slate-900 rounded-[3rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex items-center justify-center mx-auto border border-white/20">
-                       <i data-lucide="check" class="w-16 h-16 text-white"></i>
-                   </div>
-               </div>
-               <div class="space-y-5">
-                   <h2 class="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-tight">Misión cumplida.</h2>
-                   <p class="text-xl text-slate-500 font-semibold leading-relaxed">
-                       La guía exclusiva de <strong>Oly System</strong> ha sido enviada con éxito a <strong>${formData.email}</strong> y vía <strong>WhatsApp</strong>.
-                   </p>
-               </div>
-               <div class="mercury-glass-panel border-white rounded-[3.5rem] p-12 text-left space-y-10 bg-white/50 shadow-2xl">
-                   <div class="flex items-center gap-3 text-slate-900 font-bold uppercase text-[11px] tracking-[0.3em]">
-                       <i data-lucide="zap" class="w-4 h-4"></i> Acciones Finales
-                   </div>
-                   <ul class="space-y-8">
-                       <li class="flex gap-6 items-start">
-                           <div class="w-10 h-10 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center font-black shrink-0 shadow-sm border border-white">1</div>
-                           <p class="text-slate-600 font-bold text-lg">Confirma tu correo electrónico ahora (revisa promociones).</p>
-                       </li>
-                       <li class="flex gap-6 items-start">
-                           <div class="w-10 h-10 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center font-black shrink-0 shadow-sm border border-white">2</div>
-                           <p class="text-slate-600 font-bold text-lg">Activa el bot de Oly System que te saludará por WhatsApp.</p>
-                       </li>
-                   </ul>
-               </div>
-               <button onclick="window.location.reload()" class="px-24 py-7 btn-mercury rounded-[2.5rem] font-black text-2xl active:scale-95 shadow-2xl">
-                   Listo
-               </button>
-           </div>`;
-lucide.createIcons();
-}
+        function closeFunnel() { funnelSection.classList.add('hidden'); document.body.style.overflow = 'auto'; }
 
-init();
-</script>
+        function init() {
+            detectCountryCode();
+            lucide.createIcons();
+            btnNext.addEventListener('click', handleNext);
+            btnBack.addEventListener('click', handleBack);
+        }
+
+        function isStepValid() {
+            switch(currentStep) {
+                case 1: return formData.nombre.trim().length > 2;
+                case 2: return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+                case 3: return formData.telefono.trim().length > 7;
+                case 4: return formData.mensajesDiarios !== '';
+                case 5: return formData.inversionMensual !== '';
+                default: return false;
+            }
+        }
+
+        function updateNav() {
+            if (currentStep > 1) { btnBack.classList.remove('hidden'); backSpacer.classList.add('hidden'); }
+            else { btnBack.classList.add('hidden'); backSpacer.classList.remove('hidden'); }
+
+            nextText.innerText = currentStep === totalSteps ? 'Finalizar Registro' : 'Siguiente';
+
+            if (isStepValid()) {
+                btnNext.disabled = false;
+                btnNext.classList.remove('bg-slate-100', 'text-slate-300', 'cursor-not-allowed');
+                btnNext.classList.add('btn-mercury', 'text-white');
+            } else {
+                btnNext.disabled = true;
+                btnNext.classList.add('bg-slate-100', 'text-slate-300', 'cursor-not-allowed');
+                btnNext.classList.remove('btn-mercury', 'text-white');
+            }
+
+            progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+            stepIndicator.innerText = `Etapa ${currentStep} de ${totalSteps}`;
+        }
+
+        function handleNext() {
+            if (!isStepValid()) return;
+            if (currentStep < totalSteps) {
+                transition(() => { currentStep++; renderStep(); });
+            } else { showSuccess(); }
+        }
+
+        function handleBack() {
+            if (currentStep > 1) { transition(() => { currentStep--; renderStep(); }); }
+        }
+
+        function transition(callback) {
+            contentArea.style.opacity = '0';
+            contentArea.style.transform = 'translateY(15px)';
+            setTimeout(() => {
+                callback();
+                updateNav();
+                contentArea.style.opacity = '1';
+                contentArea.style.transform = 'translateY(0)';
+                lucide.createIcons();
+            }, 400);
+        }
+
+        function renderStep() {
+            let html = '';
+            const titles = [
+                ["Bienvenido a la Élite", "¿Cuál es tu nombre completo?"],
+                ["Configuración de Envío", "¿A qué correo enviamos el documento?"],
+                ["Notificación Prioritaria", "Tu número de WhatsApp"],
+                ["Análisis Operativo", "¿Cuántos mensajes recibe tu clínica al día?"],
+                ["Potencial de Inversión", "¿Cuánto inviertes en atención mensualmente?"]
+            ];
+
+            const [subtitle, title] = titles[currentStep - 1];
+            html = `<div class="space-y-10">
+                <div class="space-y-3">
+                    <span class="text-slate-400 font-bold uppercase text-[10px] tracking-[0.3em]">${subtitle}</span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">${title}</h2>
+                </div>`;
+
+            if (currentStep <= 3) {
+                const names = ["nombre", "email", "telefono"];
+                const placeholders = ["Nombre y Apellidos", "ejemplo@clinica.com", "+52 1..."];
+                if (currentStep === 3 && !formData.telefono && detectedPrefix) formData.telefono = detectedPrefix + " ";
+
+                const val = formData[names[currentStep-1]];
+
+                html += `<input type="text" id="input-field" placeholder="${placeholders[currentStep-1]}" value="${val}" 
+                    class="w-full glass-input rounded-[1.5rem] px-8 py-6 text-2xl text-slate-900 focus:outline-none placeholder:text-slate-300 font-semibold shadow-inner">`;
+                
+                if (currentStep === 3) {
+                    html += `<p class="mt-4 text-slate-500 font-medium leading-relaxed px-2 animate-in fade-in duration-500">
+                        a este numero tambien enviaremos tu regalo, por lo que corrobora que este bien escrito y con tu codigo de país es correcto
+                    </p>`;
+                }
+            } else {
+                const opts = currentStep === 4 ? optionsMensajes : optionsInversion;
+                const field = currentStep === 4 ? 'mensajesDiarios' : 'inversionMensual';
+                html += `<div class="grid gap-4">
+                    ${opts.map(opt => `
+                        <button onclick="selectOption('${field}', '${opt}')" class="option-mercury p-7 rounded-[2rem] text-left transition-all flex items-center justify-between group ${formData[field] === opt ? 'active-option' : ''}">
+                            <span class="text-xl font-bold ${formData[field] === opt ? 'text-slate-900' : 'text-slate-500'}">${opt}</span>
+                            <div class="w-7 h-7 rounded-full border-2 flex items-center justify-center transition-all ${formData[field] === opt ? 'border-slate-900 bg-slate-900 scale-110 shadow-lg shadow-black/10' : 'border-slate-200'}">
+                                ${formData[field] === opt ? '<div class="w-2.5 h-2.5 bg-white rounded-full"></div>' : ''}
+                            </div>
+                        </button>
+                    `).join('')}
+                </div>`;
+            }
+            contentArea.innerHTML = html + `</div>`;
+
+            const input = document.getElementById('input-field');
+            if (input) {
+                input.focus();
+                const len = input.value.length;
+                const supportedTypes = ['text', 'tel', 'search', 'url', 'password'];
+                if (supportedTypes.includes(input.type)) {
+                    input.setSelectionRange(len, len);
+                }
+                input.addEventListener('input', (e) => {
+                    formData[["nombre", "email", "telefono"][currentStep-1]] = e.target.value;
+                    updateNav();
+                });
+            }
+        }
+
+        window.selectOption = function(field, value) {
+            formData[field] = value;
+            renderStep();
+            updateNav();
+        }
+
+        function showSuccess() {
+            funnelSection.innerHTML = `
+            <div class="max-w-xl w-full text-center space-y-12 p-8 animate-in fade-in duration-1000">
+                <div class="relative inline-block">
+                    <div class="absolute inset-0 bg-slate-300 blur-[100px] opacity-40 rounded-full animate-pulse"></div>
+                    <div class="relative w-32 h-32 bg-slate-900 rounded-[3rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex items-center justify-center mx-auto border border-white/20">
+                        <i data-lucide="check" class="w-16 h-16 text-white"></i>
+                    </div>
+                </div>
+                <div class="space-y-5">
+                    <h2 class="text-5xl md:text-6xl font-black text-slate-900 tracking-tighter leading-tight">Misión cumplida.</h2>
+                    <p class="text-xl text-slate-500 font-semibold leading-relaxed">
+                        La guía exclusiva de <strong>Oly System</strong> ha sido enviada con éxito a <strong>${formData.email}</strong> y vía <strong>WhatsApp</strong>.
+                    </p>
+                </div>
+                <div class="mercury-glass-panel border-white rounded-[3.5rem] p-12 text-left space-y-10 bg-white/50 shadow-2xl">
+                    <div class="flex items-center gap-3 text-slate-900 font-bold uppercase text-[11px] tracking-[0.3em]">
+                        <i data-lucide="zap" class="w-4 h-4"></i> Acciones Finales
+                    </div>
+                    <ul class="space-y-8">
+                        <li class="flex gap-6 items-start">
+                            <div class="w-10 h-10 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center font-black shrink-0 shadow-sm border border-white">1</div>
+                            <p class="text-slate-600 font-bold text-lg">Confirma tu correo electrónico ahora (revisa promociones).</p>
+                        </li>
+                        <li class="flex gap-6 items-start">
+                            <div class="w-10 h-10 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center font-black shrink-0 shadow-sm border border-white">2</div>
+                            <p class="text-slate-600 font-bold text-lg">Activa el bot de Oly System que te saludará por WhatsApp.</p>
+                        </li>
+                    </ul>
+                </div>
+                <button onclick="window.location.reload()" class="px-24 py-7 btn-mercury rounded-[2.5rem] font-black text-2xl active:scale-95 shadow-2xl">
+                    Listo
+                </button>
+            </div>`;
+            lucide.createIcons();
+        }
+
+        init();
+    </script>
 </body>
 </html>

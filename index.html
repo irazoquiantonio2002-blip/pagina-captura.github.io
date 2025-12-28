@@ -395,6 +395,15 @@
                 
                 html += `<input type="text" id="input-field" placeholder="${placeholders[currentStep-1]}" value="${formData[names[currentStep-1]]}" 
                     class="w-full glass-input rounded-[1.2rem] md:rounded-[1.5rem] px-6 py-4 md:px-8 md:py-6 text-xl md:text-2xl text-slate-900 focus:outline-none font-semibold">`;
+                
+                // --- NUEVA NOTA AGREGADA PARA EL PASO DEL TELÉFONO ---
+                if (currentStep === 3) {
+                    html += `<p class="mt-4 text-slate-500 text-sm md:text-base font-medium leading-relaxed">
+                        A este número también enviaremos tu regalo, por lo que corrobora que esté bien escrito y con tu código de país correcto.
+                    </p>`;
+                }
+                // -----------------------------------------------------
+
             } else {
                 const opts = currentStep === 4 ? optionsMensajes : optionsInversion;
                 const field = currentStep === 4 ? 'mensajesDiarios' : 'inversionMensual';
@@ -440,16 +449,39 @@
         }
 
         function showSuccess() {
+            // --- NUEVO MENSAJE FINAL COMPLETO ---
             funnelSection.innerHTML = `
-            <div class="max-w-xl w-full text-center space-y-8 p-6">
-                <div class="relative w-24 h-24 bg-slate-900 rounded-[2rem] flex items-center justify-center mx-auto">
-                    <i data-lucide="check" class="w-12 h-12 text-white"></i>
+            <div class="max-w-xl w-full text-center space-y-8 md:space-y-12 p-6 md:p-8 animate-in fade-in duration-1000 overflow-y-auto custom-scroll h-full flex flex-col justify-center items-center">
+                <div class="relative inline-block shrink-0">
+                    <div class="absolute inset-0 bg-slate-300 blur-[80px] opacity-40 rounded-full animate-pulse"></div>
+                    <div class="relative w-24 md:w-32 h-24 md:h-32 bg-slate-900 rounded-[2.5rem] md:rounded-[3rem] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex items-center justify-center mx-auto border border-white/20">
+                        <i data-lucide="check" class="w-12 md:w-16 h-12 md:h-16 text-white"></i>
+                    </div>
                 </div>
-                <div class="space-y-4">
-                    <h2 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tighter">Misión cumplida.</h2>
-                    <p class="text-lg text-slate-500 font-semibold">La guía ha sido enviada a <strong>${formData.email}</strong>.</p>
+                <div class="space-y-4 md:space-y-5">
+                    <h2 class="text-3xl md:text-6xl font-black text-slate-900 tracking-tighter leading-tight">Misión cumplida.</h2>
+                    <p class="text-base md:text-xl text-slate-500 font-semibold leading-relaxed px-2">
+                        La guía exclusiva de <strong>Oly System</strong> ha sido enviada con éxito a <strong>${formData.email}</strong> y vía <strong>WhatsApp</strong>.
+                    </p>
                 </div>
-                <button onclick="window.location.reload()" class="w-full py-6 btn-mercury rounded-[2rem] font-black text-xl">Listo</button>
+                <div class="mercury-glass-panel border-white rounded-[2rem] md:rounded-[3.5rem] p-6 md:p-12 text-left space-y-6 md:space-y-10 bg-white/50 w-full max-w-md">
+                    <div class="flex items-center gap-3 text-slate-900 font-bold uppercase text-[9px] md:text-[10px] tracking-[0.2em] md:tracking-[0.3em]">
+                        <i data-lucide="zap" class="w-3 md:w-4 h-3 md:h-4"></i> Acciones Finales
+                    </div>
+                    <ul class="space-y-6 md:space-y-8">
+                        <li class="flex gap-4 md:gap-6 items-start">
+                            <div class="w-8 md:w-10 h-8 md:h-10 rounded-xl bg-slate-100 text-slate-900 flex items-center justify-center font-black shrink-0 text-xs md:text-base">1</div>
+                            <p class="text-slate-600 font-bold text-sm md:text-lg">Confirma tu correo ahora (revisa promociones).</p>
+                        </li>
+                        <li class="flex gap-4 md:gap-6 items-start">
+                            <div class="w-8 md:w-10 h-8 md:h-10 rounded-xl bg-slate-100 text-slate-900 flex items-center justify-center font-black shrink-0 text-xs md:text-base">2</div>
+                            <p class="text-slate-600 font-bold text-sm md:text-lg">Tambien recibiras una confirmación por WhatsApp. Mantente al pendiente</p>
+                        </li>
+                    </ul>
+                </div>
+                <button onclick="window.location.reload()" class="px-12 md:px-24 py-5 md:py-7 btn-mercury rounded-2xl md:rounded-[2.5rem] font-black text-xl md:text-2xl active:scale-95 shadow-2xl shrink-0">
+                    Listo
+                </button>
             </div>`;
             lucide.createIcons();
         }
